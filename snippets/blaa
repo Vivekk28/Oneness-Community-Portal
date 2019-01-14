@@ -1,0 +1,152 @@
+<%- include admintemplate.ejs %>
+
+                
+                    
+                        <div class="card" style="margin-right: 20px; margin-left:20px">
+                            <div class="card-header">
+                                <strong class="card-title">USERS</strong>
+                            </div>
+                            <div class="card-body" style>
+                                <table class="table" id="myTable" style="margin-right:0px">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Email</th>
+                                            <th scope="col">City</th>
+                                            <th scope="col">Phone</th>
+                                            <th scope="col">Status</th>
+                                            <th scope="col">Role</th>
+                                            <th scole="col">Action</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="modal fade" id="smallmodal" tabindex="-1" role="dialog" aria-labelledby="smallmodalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-sm" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="smallmodalLabel">Edit</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                       <form id="abc">
+                                        <div class="form-group">
+                                            
+                                            Email:<input type="email" class="form-control" id="femail"  name="femail" required value="abc" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$">
+                                        </div>
+                                        <div class="form-group">
+                                            
+                                            City:<input type="text" class="form-control" id="fcity"  name="fcity" required >
+                                        </div>
+                                        <div class="form-group">
+                                            
+                                            Phone:<input type="text" class="form-control" id="fphone"  name="fphone" required>
+                                        </div>
+                                        <div class="form-group">
+                                            
+                                            Status:<input type="text" class="form-control" id="fstatus"  name="fstatus" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Role:</label><select class="form-control" id="fselect">
+                                                <option id="Admin" value="Admin">Admin</option>
+                                                <option id="User" value="User">User</option>
+                                            </select>
+                                        </div>
+
+                                       </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" id="cancel" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                        <button id="fsubmit" class="btn btn-primary" onclick=>Update</button>
+                                    
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+    
+
+
+                        
+    
+
+                   <script>
+                       
+                       $(document).ready(function() {
+    $('#myTable').DataTable( {
+        "processing": true,
+        "serverSide": true,
+       
+        "ajax": {
+            "url": "/admin/getdata",
+            "type": "POST",
+            
+        },
+        'columns':
+                [
+                { 'data': 'email', "defaultContent": "", 'name': 'ZipCode' },
+                { 'data': 'city', "defaultContent": "", 'name': 'City' },
+                { 'data': 'phone', "defaultContent": "", 'name': 'Population' },
+                { 'data': 'status', "defaultContent": "", 'name': 'State' },
+                { 'data': 'role', "defaultContent": "", 'name': 'admin' },
+                {
+                    "render": function (data, type, JsonResultRow, meta) {
+                            return '<i class="fa fa-gear" style="cursor:pointer" id="'+JsonResultRow.email+' '+JsonResultRow.city+' '+JsonResultRow.phone+' '+JsonResultRow.status+' '+JsonResultRow.role+'" data-toggle="modal" data-target="#smallmodal" ></i>&nbsp;&nbsp;&nbsp; <i class="fa fa-gear"></span>';}
+                } 
+                ],
+    
+    } );
+    var oldemail;
+   
+   
+    $(document).on( 'click', '.fa', function () { 
+        var c=$(this).attr('class');
+        //alert(c);
+        var old = $(this).attr('id');
+        var array=old.split(" ");
+        oldemail=array[0];
+        
+
+
+        $("#femail").attr("value",array[0]);
+        $("#fcity").attr("value",array[1]);
+        $("#fphone").attr("value",array[2]);
+        $("#fstatus").attr("value",array[3]);
+        var option="#"+array[4];
+        $(option).attr("selected","selected");
+        
+    
+    });
+    $("#fsubmit").click(function(){
+        var email=$("#femail").val();
+        var phone=$("#fphone").val();
+        var city=$("#fcity").val();
+        var role=$("#fselect").val();
+        $.ajax({
+                url: '/admin/updateuser',
+                type: 'POST',
+                dataType: 'json',
+                data: {oldemail:oldemail,email:email,phone:phone,city:city,role:role},
+        });
+   
+        
+        $('#myTable').DataTable().ajax.reload();
+        
+        
+
+
+$("#cancel").trigger('click');
+alert("Record updated");
+
+    });
+   
+
+
+   
+} );
+
+                   </script>
+                </body>
+                
+                </html>

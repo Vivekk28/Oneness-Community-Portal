@@ -1,0 +1,100 @@
+<%- include admintemplate.ejs %>
+        
+       <div class="sufee-login d-flex align-content-center flex-wrap">
+            <div class="container">
+                    
+                <div class="login-content">
+                
+                    <div class="login-form">
+                        <form method=post action="/admin/useradded">
+                            <div class="alert alert-primary" role="alert" id="bb" style="display:none"> 
+                                
+
+                                </div>
+                            <div class="form-group">
+                                <label>Email</label>
+                                <input type="email" class="form-control" id="email" placeholder="Email" name=email required  pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$">
+                            </div>
+                                <div class="form-group">
+                                    <label>Phone</label>
+                                    <input type="tel" required class="form-control" placeholder="Phone" name="phone" pattern="[0-9]{10}">
+                            </div>
+                                    <div class="form-group">
+                                        <label>City</label>
+                                        <input type="text" required class="form-control" placeholder="City" name="city">
+                            </div>
+                            <div class="form-group">
+                                    <label>Password</label>
+                                    <input type="password" required class="form-control" placeholder="Password" name="pass" >
+                        </div>
+                        <div class="form-group">
+                                <label>Role</label>
+                                                                    
+                                                                        <select name="role" id="select" class="form-control">
+                                                                            
+                                                                            <option value="Admin">Admin</option>
+                                                                            <option value="User">User</option>
+                                                                        
+                                                                        </select>
+                                                                    
+                    </div>
+                                        
+                                        <button  class="btn btn-primary btn-flat m-b-30 m-t-30" disabled>Add user</button>
+                                        
+                                        
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+     var userExist=false;
+     $(document).ready(function(){
+         
+         $("#email").change(function(){
+            var data=$('#email').val().trim().toLowerCase();
+          
+          
+           $.ajax({
+                url: '/admin/checkusers',
+                type: 'POST',
+                dataType: 'json',
+                data: {email:data},
+                success: function(response)
+                {
+                 
+                    if(response)
+                    {
+                        userExist=false;
+
+                        $('#bb').text(data+" is not Avilable");
+            $("#bb").show();
+            $("button").attr('disabled','disabled');
+             
+                    }
+                    else
+                    {
+                        userExist=true;
+                        $('#bb').text(data+" is Avilable");
+            $("#bb").show();
+            $("button").removeAttr('disabled');
+
+                    }
+               
+                }
+           });
+         });
+         
+     });
+     </script>
+     
+     
+</body>
+</html>
+
+
+
+
+     

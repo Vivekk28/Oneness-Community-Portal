@@ -1,0 +1,210 @@
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9" lang=""> <![endif]-->
+<!--[if gt IE 8]><!-->
+    <html class="no-js" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+    <!--<![endif]-->
+    
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <title>
+            Oneness
+        </title>
+        <meta name="description" content="Sufee Admin - HTML5 Admin Template" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="apple-touch-icon" href="apple-icon.png" />
+        <link rel="shortcut icon" href="favicon.ico" />
+        <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js">
+        </script>
+        <link rel="stylesheet" href="/vendors/bootstrap/dist/css/bootstrap.min.css" type="text/css" />
+        <link rel="stylesheet" href="/vendors/font-awesome/css/font-awesome.min.css" type="text/css" />
+        <link rel="stylesheet" href="/vendors/themify-icons/css/themify-icons.css" type="text/css" />
+        <link rel="stylesheet" href="/vendors/flag-icon-css/css/flag-icon.min.css" type="text/css" />
+        <link rel="stylesheet" href="/vendors/selectFX/css/cs-skin-elastic.css" type="text/css" />
+        <link rel="stylesheet" href="/vendors/jqvmap/dist/jqvmap.min.css" type="text/css" />
+        <link rel="stylesheet" href="/vendors/datatables.net-bs4/css/dataTables.bootstrap4.min.css" type="text/css" />
+        <link rel="stylesheet" href="/vendors/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css" type="text/css" />
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js" type="text/javascript">
+        </script>
+        <script src="/vendors/datatables.net-buttons/js/buttons.html5.min.js" type="text/javascript">
+        </script>
+        <script src="/vendors/datatables.net-buttons/js/buttons.print.min.js" type="text/javascript">
+        </script>
+        <script src="/vendors/datatables.net-buttons/js/buttons.colVis.min.js" type="text/javascript">
+        </script>
+        <script src="/assets/js/init-scripts/data-table/datatables-init.js" type="text/javascript">
+        </script>
+        <script src="/vendors/datatables.net/js/jquery.dataTables.min.js" type="text/javascript">
+        </script>
+        <script src="/vendors/datatables.net-bs4/js/dataTables.bootstrap4.min.js" type="text/javascript">
+        </script>
+        <script src="/vendors/datatables.net-buttons/js/dataTables.buttons.min.js" type="text/javascript">
+        </script>
+        <script src="/vendors/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js" type="text/javascript">
+        </script>
+        <link rel="stylesheet" type="text/css" href="dist/overhang.min.css" />
+        <script type="text/javascript" src="dist/overhang.min.js">
+        </script>
+        <link rel="stylesheet" href="/assets/css/style.css" type="text/css" />
+        <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css' />
+    </head>
+    
+    <body>
+        <!-- Left Panel -->
+        <!-- Left Panel -->
+        <!-- Right Panel -->
+        <div id="right-panel" class="right-panel">
+            <!-- Header-->
+            <div class="header-menu">
+                <div class="col-sm-7">
+                    MYLOGO
+                    <div class="header-left"></div>
+                </div>
+                <div class="col-sm-5">
+                    <div class="user-area dropdown float-right">
+                        <%=user.name%><img class="user-avatar rounded-circle" src="images/admin.jpg" alt="User Avatar" />
+                    </div>
+                </div>
+            </div>
+            <!-- /header -->
+            <!-- Header-->
+            <div class="breadcrumbs">
+                <div class="col-sm-4">
+                    <div class="page-header float-left">
+                        <div class="page-title">
+                            <h1>
+                    Register
+                  </h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-8">
+                    <div class="page-header float-right">
+                        <div class="page-title">
+                            <ol class="breadcrumb text-right">
+                                <li class="active">Complete Your Info
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <form action="/uploads" method="POST" enctype="multipart/form-data">
+                <input name="myImage" type="file" enctype="multipart/form-data">
+                <input type="submit">
+                
+            </form>
+            <form action="/user/edituser" method="post">
+            <div class="card" style="margin-right:100px;margin-left:100px;margin-top:60px">
+                <div class="card-header">
+                    <strong>Normal</strong> Form
+                </div>
+                
+                <div class="card-body card-block">
+                    
+                        <div class="card">
+                            <div class="card-header">
+                                Basic Info
+                            </div>
+                            <div class="card body">
+                                <div class="form-group">
+                                    <label>Email :</label>
+                                    <input type="text" value="<%=user.email%>"" class="form-control" name="email" disabled="true" />
+                                </div>
+                                <div class="form-group">
+                                    <label>Name :</label>
+                                    <input type="text"  class="form-control" name="fullname" autocomplete="off" placeholder="Name" required="" />
+                                </div>
+                                <div class="form-group col-sm-5" style="padding:0">
+                                    <label>DOB :</label>
+                                    <input class="form-control dobDate" id="date" value='' name="dob" placeholder="MM/DD/YYYY" type="date" autocomplete="off" />
+                                </div>
+                                <div class="form-group col-sm-5" style="padding:0">
+                                    <label>Gender :</label>
+                                    <select name="gender" class="form-control">
+                                        <optgroup label="Select Gender">
+                                            <option value="Male">
+                                                Male
+                                            </option>
+                                            <option value="Female">
+                                                Female
+                                            </option>
+                                            <option value="Transgender">
+                                                Transgender
+                                            </option>
+                                        </optgroup>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header">
+                                Contact Info
+                            </div>
+                            <div class="card-body&gt;">
+                                <div class="form-group">
+                                    <label>Phone :</label>
+                                    <input type="text" value="<%=user.phone%>" class="form-control" name="phone" maxlength="10" required="" />
+                                </div>
+                                <div class="form-group">
+                                    <label>City :</label>
+                                    <input type="text" value="<%=user.city%>" class="form-control" name="city" required="" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header">
+                                Personal Info
+                            </div>
+                            <div class="Card-body">
+                                <div class="form-group">
+                                    <label>Interests :</label>
+                                    <div class="tag-conatiner-custom-div">
+                                        <select id="interestsEditor" name='interests' class="form-control input-sm select2-multiple" style="width:100%" multiple="multiple">
+                                            <!--Tags option appended here-->
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Tell us a bit more about your journey:
+                                    </label>
+                                    <textarea type="text" class="form-control" name="aboutjourney">
+                                    </textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label>What are your expectations from the communities?
+                                    </label>
+                                    <textarea type="text" class="form-control" name="comExpectations">
+                                    </textarea>
+                                </div>
+                            </div>
+                        </div>
+                    
+                </div>
+                <div class="card-footer">
+                        <button type="submit" class="btn btn-primary btn-sm">Submit</button>
+                        <button type="reset" class="btn btn-danger btn-sm">Reset</button>
+                    </div>
+            </div>
+        </form>
+            
+        
+        <!-- Right Panel -->
+        <script src="/vendors/jquery/dist/jquery.min.js" type="text/javascript">
+        </script>
+        <script src="/vendors/popper.js/dist/umd/popper.min.js" type="text/javascript">
+        </script>
+        <script src="/vendors/bootstrap/dist/js/bootstrap.min.js" type="text/javascript">
+        </script>
+        <script src="/assets/js/main.js" type="text/javascript">
+        </script>
+        <script src="/vendors/chart.js/dist/Chart.bundle.min.js" type="text/javascript">
+        </script>
+        <script src="/assets/js/dashboard.js" type="text/javascript">
+        </script>
+        <script src="/assets/js/widgets.js" type="text/javascript">
+        </script>
+    </body>
+    
+    </html>

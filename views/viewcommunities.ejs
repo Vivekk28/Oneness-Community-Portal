@@ -1,0 +1,222 @@
+<%- include admintemplate.ejs %>
+
+<style>
+    .imgclass {
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      padding: 5px;
+      height:90px;
+       width:90px; 
+      
+    }
+    </style>
+    
+    <div class="modal fade" id="mediumModal" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <img id="myImg" height=150 widht=150>&nbsp;&nbsp;
+                    <h5 class="modal-title" id="mediumModalLabel" align="center">Medium Modal</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p id="desc" class="form-control" disabled></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                 
+                </div>
+            </div>
+        </div>
+    </div>
+                    
+                        <div class="card" style="margin-right: 20px; margin-left:20px">
+                            <div class="card-header">
+                                <strong class="card-title">COMMUNITIES</strong>
+                            </div>
+                            <div class="card-body" style>
+                                <table class="table" id="myTable" style="margin-right:0px">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Name</th>
+                                            <th scope="col">Owner</th>
+                                            <th scope="col">Created At</th>
+                                            <th scope="col">Location</th>
+                                            <th scope="col">Rule</th>
+                                            <th scope="col">Action</th>
+                                            <th scope="col">Image</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="table">
+                                    </tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="modal fade" id="smallmodal" tabindex="-1" role="dialog" aria-labelledby="smallmodalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-sm" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="smallmodalLabel">Update Community</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                       <form id="abc">
+                                       
+                                       
+                                        <div class="form-group">
+                                            
+                                            Community Name:<input type="text" class="form-control" id="communityName" name="communityName" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Status:</label><select class="form-control" id="fselect">
+                                                <option id="Admin" value="Active">Active</option>
+                                                <option id="User" value="Disabled">Disabled</option>
+                                            </select>
+                                        </div>
+
+                                       </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" id="cancel" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                        <button id="fsubmit" class="btn btn-primary" onclick=>Update</button>
+                                    
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+    
+
+
+                        
+    
+
+                   <script>
+
+                           
+    userlist();
+    function userlist()
+    {
+     
+    $.ajax({
+    type: "POST",
+    url: "/community/getdata",
+    data: JSON.stringify({value:"simple"}),
+    contentType: 'application/json',
+    success: function(response)
+    {
+      
+    
+      var res=response;
+       
+        var code="";
+        var table=document.getElementById("table");
+        table.innerHTML="";
+      
+       
+      for(var i=0;i<res.length;i++){
+        var dt=new Date(res[i].created_at);
+        dtt=dt.getDate()+"/"+dt.getMonth()+1+"/"+dt.getFullYear();
+        code+="<tr>";
+        code+="<td>"+res[i].name+"</td>";
+        code+="<td>"+res[i].owner+"</td>";
+        code+="<td>"+dtt+"</td>";
+        code+="<td>"+res[i].location+"</td>";
+        code+="<td>"+res[i].rule+"</td>";
+        var tt=res[i]._id+"*"+res[i].name+"*"+res[i].owner+"*"+res[i].rule;
+        code+="<td><i class=\"fa fa-gear\" id="+tt+" style=\"cursor:pointer\" data-toggle=\"modal\" data-target=\"#smallmodal\"></i>&nbsp;&nbsp;&nbsp;&nbsp;<i class=\"fa fa-info\" id="+tt+" style=\"cursor:pointer\" data-toggle=\"modal\" data-target=\"#mediumModal\"></i></td>"
+        var idd="../public/uploads/"+res[i].picture;
+        
+        code+="<td><img src="+idd+" class=imgclass></td>"
+        
+        code+="</tr>"
+      }
+       
+      
+      $("#table").html(code);
+      $('#myTable').DataTable();
+    }
+    
+  });
+}
+                       
+                       $(document).ready(function() {
+     var id;
+   $(document).on( 'click', '.fa', function () { 
+        var c=$(this).attr('class');
+       
+        
+        var old = $(this).attr('id');
+        
+     
+        var array=old.split("*");
+        
+        if(c=="fa fa-info")
+        {
+            
+            $.ajax({
+                url: '/community/getinfo',
+                type: 'POST',
+                dataType: 'json',
+                data:{id:array[0]},
+                success: function(response)
+                {
+                    
+                   var pic="../public/uploads/"+response.picture;
+                   $("#myImg").attr("src",pic);
+                   $("#mediumModalLabel").html(response.name);
+                   $("#desc").html(response.desc);
+                }
+        });
+        }
+       
+        
+        
+           id=array[0];
+        $("#communityName").attr("value",array[1]);
+        //$("#fcity").attr("value",array[1]);
+        //$("#fphone").attr("value",array[2]);
+        //$("#fstatus").attr("value",array[3]);
+        //var option="#"+array[4];
+        //$(option).attr("selected","selected");
+        
+    
+    });
+    $("#fsubmit").click(function(){
+        var name=$("#communityName").val();
+        //var phone=$("#fphone").val();
+        //var city=$("#fcity").val();
+        //var role=$("#fselect").val();
+        //var status=$("#fstatus").val();
+        $.ajax({
+                url: '/community/updatecommunity',
+                type: 'POST',
+                dataType: 'json',
+                data:{name:name,id:id},
+        });
+   
+        
+       
+        
+        
+
+
+$("#cancel").trigger('click');
+alert("Record updated");
+userlist();
+
+    });
+   
+
+
+   
+} );
+
+                   </script>
+                </body>
+                
+                </html>
